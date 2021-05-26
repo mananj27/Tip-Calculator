@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+         <title>Tip Calculator</title>
+    <!-- bootstrap -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <!-- bootstrap -->
+    <style>
+        body{
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-image: linear-gradient(to right, cyan, pink);
+    background: linear-gradient(to left, #8E0E00, #1F1C18);
+    color: black;
+}
+#container{
+  height: 525px;
+  width: 360px;
+  margin: 100px auto;
+  background: #f7f7f7;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+}
+h1{
+    background: #1F030C;
+    color: whitesmoke;
+    margin: 0;
+    text-align: center;
+    padding: 10px 10px;
+    text-transform: uppercase;
+    font-size: 18px;
+    font-weight: normal;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+p{
+    padding-left: 20px;
+}
+form input[type="text"] {
+  width: 130px;
+}
+input {
+    padding-left: 20px;
+}
+#billamt{
+    font-size: 14px;
+    color: red;
+    background-color: #f7f7f7;
+    padding-left: 50px;
+    width: 60%;
+    padding: 5px 5px 8px 8px;
+}
+#billamt:focus {
+    background: #fff;
+    border: 3px solid #2980b9;
+    outline: none;
+}
+#peopleamt {
+    width: 60%;
+    padding: 5px 5px 8px 8px;
+    margin-left: 20px;
+    color: red;
+    background-color: #f7f7f7;
+    font-size: 14px;
+}
+#quality{
+  padding: 13px 13px 20px 20px;
+  margin-left: 20px;
+  font-size: 25px;
+}
+button {
+    text-transform: uppercase;
+    font-weight: bold;
+    display: block;
+    margin: 30px auto;
+    background: #AD133A;
+    border-radius: 5px;
+    width: 200px;
+    height: 50px;
+    font-size: 17px;
+    color: white;
+  }
+  button:hover {
+    background: #4c2827;
+    border-bottom-color: #111;
+  }
+  button:active {
+    position: relative;
+    top: 1px;
+  }
+  #totalTip {
+    font-size: 30px;
+    margin-top: 5px;
+    text-align: center;
+  }
+  #totalTip:before {
+    content: "Tip amount";
+    font-size: 20px;
+    font-weight: bold;
+    display: block;
+    text-transform: uppercase;
+  }
+  #totalTip sup {
+    font-size: 20px;
+    top: -18px;
+  }
+  #totalTip small {
+    font-size: 20px;
+    font-weight: bold;
+    display: block;
+  }  
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>Tip Calculator</h1>
+            <div id="calculator">
+                <form>
+                    <p>How much was your bill?</p>
+                    ₹  <input type="text" name="" id="billamt" placeholder="Bill Amount">
+                    <p>How was your service?</p>
+                        <select name="" id="quality">
+                            <option disabled selected value="0">-- Choose an Option--</option>
+                            <option value="0.3">30&#37; &#45; Outstanding</option>
+                            <option value="0.2">20&#37; &#45; Good</option>
+                            <option value="0.15">15&#37; &#45; It was OK</option>
+                            <option value="0.1">10&#37; &#45; Bad</option>
+                            <option value="0.05">5&#37; &#45; Terrible</option>
+                        </select>
+                </form>
+                <p>How many people are sharing the bill?</p>
+                <input type="text" id="peopleamt" placeholder="Number of People"> people
+                <button type="button" id="calculate">Calculate!</button>
+            </div>
+            <div id="totalTip">
+                <sup>₹</sup><span id="tip">0.00</span>
+                <small id="each">each</small>
+            </div>
+    </div>
+
+    <script>
+        function calculateTip(){
+        var billAmt = document.getElementById("billamt").value;
+        var serqual = document.getElementById("quality").value;
+        var num = document.getElementById("peopleamt").value;
+
+    if (billAmt === "" || serqual == 0) {
+        alert("Please enter values");
+        return;
+    }
+    if(num ==="" || num <=1){
+        num = 1;
+        document.getElementById("each").style.display = "none";
+    }else{
+        document.getElementById("each").style.display = "block";
+    }
+
+    var total = (billAmt * serqual) / num;
+    total = Math.round(total * 100)/100;
+    total = total.toFixed(2);
+    document.getElementById("totalTip").style.display = "block";
+    document.getElementById("tip").innerHTML = total;
+
+}
+
+document.getElementById("totalTip").style.display = "none";
+document.getElementById("each").style.display = "none";
+
+//click to call function
+document.getElementById("calculate").onclick = function() {
+  calculateTip();
+
+};
+</script>
+<!-- bootstrap -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<!-- bootstrap -->
+</body>
+</html>
